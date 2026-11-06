@@ -198,8 +198,8 @@ The descriptive analysis compares the observed values in the two experimental gr
 |---|---|---:|---:|---:|
 | Engagement Score | Mean ± SD | 0.599958 ± 0.100017 | 0.799726 ± 0.100046 | +0.199768 points |
 | Duration Played | Mean ± SD (minutes) | 120.0758 ± 30.0389 | 159.9129 ± 30.0189 | +39.8371 minutes |
-| Payment = Yes | Positive status rate | 69.688% | 79.814% | +10.126 percentage points |
-| Subscription = Premium | Premium status rate | 59.742% | 80.250% | +20.508 percentage points |
+| Payment = Yes | Positive status rate | 34,844 (69.688%) | 39,907 (79.814%) | +10.126 percentage points |
+| Subscription = Premium | Premium status rate | 29,871 (59.742%) | 40,125 (80.250%) | +20.508 percentage points |
 
 Sample Sizes
 
@@ -302,9 +302,8 @@ The analysis distinguishes between an observed difference in the dataset and a b
 | Subscription = Premium | +20.508 pp | +34.33% | A higher proportion of observations has Premium status | Subscription-related Indicator |
 
 Relative uplift is calculated as:
-\[
-\text{Relative Uplift} = \frac{\text{Target} - \text{Control}}{\text{Control}} \times 100\%
-\]
+
+$$\text{Relative Uplift} = \frac{\text{Target} - \text{Control}}{\text{Control}} \times 100\%$$
 
 For Payment and Subscription, the absolute difference in percentage points is the primary comparison. Relative uplift is included as supplementary context and should not replace percentage-point reporting.
 
