@@ -1,4 +1,4 @@
-# Spotify A/B Testing
+ # Spotify A/B Testing
 
 ## 1. Experimental Overview & Methodology
 
@@ -649,3 +649,303 @@ Before making a final implementation decision, the following data should be vali
 - Subscription retention and renewal behavior beyond the initial billing cycle.
 
 The financial findings should be considered alongside the Statistical Results, Business Impact Analysis, and Risk Assessment. Post-implementation monitoring will be evaluated separately in the next stage and should not be treated as completed evidence in this analysis.
+
+## Risk Assessment & Data Limitation
+
+### 5.1 Objective
+
+This section evaluates the risks and limitations that may affect the reliability, interpretation, and business use of the Spotify A/B testing results.
+
+The assessment covers the experiment design, data quality, outcome measurement, statistical analysis, financial assumptions, and the availability of post-implementation evidence. Its purpose is not to invalidate the analysis, but to clarify what the current dataset supports, what remains uncertain, and what should be addressed before making a broader rollout decision.
+
+Risk priorities in this section are qualitative assessments based on their potential impact on the business decision; they are not calculated risk scores.
+
+### 5.2 Experiment Design Risks
+
+| Risk / Limitation | Evidence Available | Potential Impact | Priority | Recommended Mitigation |
+|---|---|---|---|---|
+| User-level identity is unavailable | The dataset does not contain a unique `User_ID`. | It is not possible to independently verify that each row represents a unique user, detect repeated users across rows, or audit whether a user remained in only one assigned group. This also limits verification of observation independence. | High | Use a stable, anonymized user identifier in future experiments. Validate one assignment per user and check for cross-group exposure. |
+| Randomization cannot be independently audited | The 50:50 allocation and random assignment are based on experiment information; the main dataset does not contain assignment logs or a user identifier. | Equal group sizes do not, by themselves, prove that randomization was correctly implemented. Potential assignment imbalance or contamination cannot be independently assessed. | High | Retain assignment logs, anonymized user identifiers, allocation timestamps, and treatment exposure records. Check baseline balance and assignment consistency. |
+| Treatment details are insufficiently documented | The available project information identifies Control and Target but does not fully describe the exact intervention applied to Target. | The analysis can compare observed outcomes, but readers cannot fully assess what treatment produced the difference or reproduce the intervention. | Medium | Document the treatment mechanics, eligibility criteria, exposure rules, launch date, and any concurrent product or campaign changes. |
+| Experiment duration is not verifiable from the main dataset | The 14-day duration comes from assignment information; the main dataset does not provide timestamps to independently verify the observation window. | The exact exposure and measurement period cannot be audited from the analytical dataset. Time-related effects or uneven exposure may be missed. | Medium | Preserve experiment start and end dates, exposure timestamps, and outcome observation windows in the experiment log. |
+| Pre-registration and outcome prioritization are unavailable | No documented pre-registration was provided. Primary and secondary outcomes were not confirmed as specified before analysis. | It is not possible to establish that the selected outcomes and hypotheses were fixed before observing the results. This increases the need for caution when interpreting multiple outcomes. | Medium | Define the primary outcome, secondary outcomes, hypotheses, sample-size plan, duration, and analysis plan before future experiments begin. |
+
+### 5.3 Data Quality and Measurement Risks
+
+#### 5.3.1 Data validation findings
+
+The following checks were performed on the main experiment dataset:
+
+| Validation Item | Finding | Treatment / Interpretation |
+|---|---:|---|
+| Total observations | 100,000 | 50,000 Control and 50,000 Target observations. |
+| Missing values | 0 | No imputation was required for the analyzed columns. |
+| Full-row duplicates | 0 | No identical complete rows were identified. This does not prove user-level uniqueness because `User_ID` is unavailable. |
+| Negative `Duration Played` values | 2 | Both records were in Control and were excluded only from the Duration Played analysis. They were retained for other outcome analyses. |
+| `Engagement` values above 1 | Present | Retained under the working assumption that Engagement is a score that may exceed 1, rather than a bounded ratio. The metric definition should be confirmed. |
+
+### 5.3.2 Measurement limitations
+
+| Risk / Limitation | Evidence Available | Potential Impact | Priority | Recommended Mitigation |
+|---|---|---|---|---|
+| Engagement Score definition and scale need confirmation | Values above 1 were observed and retained because the variable is treated as a score. | If the metric is actually a bounded rate or ratio, values above 1 may indicate a data or calculation issue. Interpretation of the score depends on its official definition. | Medium | Obtain the metric formula, unit, valid range, and event definition from the dataset or experiment owner. |
+| Payment status definition is unavailable | The dataset contains `Payment` values of Yes/No, but no event definition or transaction detail was provided. | `Payment = Yes` cannot automatically be interpreted as a completed transaction during the experiment, a conversion, or incremental revenue. | High | Define the event represented by Payment and use transaction-level records with timestamps, amounts, and transaction status. |
+| Subscription baseline is unavailable | The dataset contains current `Subscription` status (Premium/Free), but no pre-experiment status. | The difference in Premium proportions cannot identify newly acquired Premium subscribers, Free-to-Premium upgrades, or subscription changes during the experiment. | High | Capture each user's subscription status before treatment and track subsequent status changes with timestamps. |
+| Full-row duplicate checking is not a substitute for user-level deduplication | No full-row duplicates were found, but there is no `User_ID`. | Multiple records for the same user could still exist if their other fields differ. | High | Deduplicate and validate records using a stable anonymized user identifier and the experiment's assignment unit. |
+
+### 5.4 Statistical Analysis Risks
+
+| Risk / Limitation | Evidence Available | Potential Impact | Priority | Recommended Mitigation |
+|---|---|---|---|---|
+| Independence of observations cannot be fully verified | Welch's t-tests and two-proportion z-tests were applied at the row level, but no `User_ID` is available. | If rows are not independent, standard errors and p-values may be unreliable. Large sample sizes do not resolve dependence between repeated observations. | High | Verify one observation per randomized user, or use an analysis method that accounts for repeated measures or clustering when required by the design. |
+| Multiple outcomes were tested | Four outcome metrics were tested. Holm correction was applied to the four p-values. | Without correction, conducting multiple tests increases the chance of at least one false-positive finding. | Mitigated in current analysis | Retain the Holm-adjusted p-values and define a primary outcome and secondary outcomes in future experiment plans. |
+| Confidence intervals are pointwise, not multiplicity-adjusted | The reported 95% confidence intervals are unadjusted pointwise intervals; Holm correction was applied to p-values. | The intervals should not be presented as simultaneous 95% confidence intervals across all four outcomes. | Medium | Label the intervals as pointwise 95% CIs, as done in this report. Use simultaneous intervals if the decision requires family-wise interval coverage. |
+| Statistical significance may be overinterpreted | All four outcomes remained significant after Holm correction, but statistical significance does not establish business value or causality by itself. | Very small p-values may be mistaken for proof of a commercially meaningful effect or proof that the treatment caused every observed difference. | Medium | Report the direction, absolute difference, confidence interval, and effect size alongside p-values. Interpret causal effects in light of experiment-design limitations. |
+| Floating-point underflow affects displayed p-values | Some statistical outputs displayed `0.0` due to numerical underflow. | Reporting p = 0 would be incorrect and could misrepresent the precision of the result. | Mitigated in current report | Report such values as `p < 0.001` rather than zero. Retain scientific notation when a reliable non-zero value is available. |
+
+### 5.5 Financial Model Risks and Assumptions
+
+The financial feasibility analysis is a scenario model based on assumptions, not an observation of Spotify's actual revenue, margin, or campaign expenditure.
+
+| Assumption / Limitation | Current Model Input | Potential Impact | Priority | Recommended Mitigation |
+|---|---|---|---|---|
+| Premium price is assumed | Rp59,900 per month | Actual realized revenue may differ because of plan type, promotions, taxes, pricing changes, or billing conditions. | Medium | Replace the assumed price with verified realized net revenue per incremental paying subscriber and the relevant billing period. |
+| Contribution margin is assumed | 60% Conservative, 70% Base Case, 80% Optimistic | Contribution and net contribution may be materially different from actual economics. | High | Obtain a finance-approved contribution margin and define which variable costs are included. |
+| Campaign cost is assumed | Rp250 million Conservative, Rp150 million Base Case, Rp100 million Optimistic | ROI, ROAS, CAC, and break-even calculations depend directly on campaign expenditure. | High | Use actual or budget-approved campaign and implementation costs, with a clear cost scope. |
+| Conversion Realization Rate is a scenario parameter | 50% Conservative, 75% Base Case, 100% Optimistic; sensitivity tested at 50%, 75%, and 100%. | The rate is not measured from the experiment. Financial outcomes depend on how much of the observed Premium-status difference is assumed to be incremental. | High | Estimate incrementality using pre-experiment subscription status, user-level assignment, and verified post-experiment subscription events. |
+| The Premium-status difference is used as a financial estimation base | 10,254 estimated difference: 50,000 × (80.250% − 59.742%). | The 10,254 figure is a difference in observed Premium-status outcomes between groups, not verified newly acquired subscribers. Treating it as new subscribers without adjustment could overstate revenue. | High | Validate new subscriptions against baseline status and transaction records before using the count as incremental subscribers. |
+| Modelled revenue assumes a full monthly billing amount | Rp59,900 multiplied by estimated realized outcomes | Refunds, discounts, partial billing periods, churn, payment failures, taxes, and timing may reduce realized revenue. | Medium | Use actual net collected revenue and track subscriber tenure, refunds, and churn over an appropriate period. |
+| Net contribution is not necessarily company net profit | Contribution after the assumed margin less campaign cost | Other operating expenses, overhead, taxes, and costs outside the model may not be included. | Medium | Label the measure as modelled net contribution and expand the cost scope before presenting it as profit. |
+| CAC and payback rely on incremental-user assumptions | CAC uses campaign cost divided by estimated incremental Premium outcomes; payback uses assumed monthly contribution per user. | These metrics are provisional unless the denominator represents verified incremental new paying subscribers. | High | Recalculate using verified incremental paid subscribers, actual acquisition costs, and observed contribution over time. |
+
+### 5.5.1 Financial scenario interpretation
+
+The model produced the following results under the stated assumptions:
+
+| Indicator | Conservative | Base Case | Optimistic |
+|---|---:|---:|---:|
+| Contribution Margin | 60% | 70% | 80% |
+| Campaign Cost | Rp250,000,000 | Rp150,000,000 | Rp100,000,000 |
+| Conversion Realization Rate | 50% | 75% | 100% |
+| Estimated Incremental Premium Outcomes | 5,127 | 7,690.5 | 10,254 |
+| Modelled Revenue | Rp307,107,300 | Rp460,660,950 | Rp614,214,600 |
+| Modelled Contribution | Rp184,264,380 | Rp322,462,665 | Rp491,371,680 |
+| Net Contribution | -Rp65,735,620 | Rp172,462,665 | Rp391,371,680 |
+| ROI | -26.29% | 114.98% | 391.37% |
+| ROAS | 1.23x | 3.07x | 6.14x |
+
+These values are scenario outputs, not actual financial performance. Fractional estimated outcomes, such as 7,690.5, represent an expected value in the model rather than a count of actual individual subscribers.
+
+The sensitivity analysis holds the Base Case assumptions constant and varies only the Conversion Realization Rate:
+
+| Conversion Realization Rate | Estimated Incremental Outcomes | Modelled Revenue | Net Contribution | ROI | ROAS |
+|---:|---:|---:|---:|---:|---:|
+| 50% | 5,127 | Rp307,107,300 | Rp64,975,110 | 43.32% | 2.05x |
+| 75% | 7,690.5 | Rp460,660,950 | Rp172,462,665 | 114.98% | 3.07x |
+| 100% | 10,254 | Rp614,214,600 | Rp279,950,220 | 186.63% | 4.09x |
+
+The Base Case break-even Conversion Realization Rate is approximately 34.89%, under the assumed price, contribution margin, and campaign cost. This is a model threshold, not an observed conversion rate.
+
+### 5.6 Post-Implementation Evidence Limitation
+
+A separate post-implementation dataset has been identified with approximately 15 days of observations and two fields: Date and Total Users. This dataset has not yet been analyzed as part of the current pre-implementation evaluation.
+
+Its current structure may support daily user-volume monitoring, provided the definition of Total Users is confirmed. However, it does not contain a Control/Target assignment, user-level identifiers, Engagement, Duration Played, Payment, Subscription, or Revenue fields.
+
+Therefore, it cannot independently establish that the Target treatment caused a change in user volume, nor can it validate whether the four A/B testing outcomes persisted after implementation. It should be analyzed separately in a subsequent Post-Implementation Evaluation.
+
+Recommended additional post-implementation data includes:
+- An anonymized user identifier and treatment/exposure information.
+- Daily active users and new users, with clear metric definitions.
+- Engagement and listening-duration metrics.
+- Payment events and transaction amounts.
+- Subscription status changes and renewal events.
+- Revenue, refunds, campaign costs, and relevant operating costs.
+- A suitable comparison baseline or holdout group, where feasible.
+
+### 5.7 Overall Risk Assessment
+
+The A/B testing analysis provides consistent statistical evidence that the observed Target group had higher values across the four measured outcomes. The results also show potentially positive business indicators and positive financial outcomes under the Base Case and Optimistic assumptions.
+
+Nevertheless, several high-priority limitations remain:
+
+1. User-level uniqueness, assignment consistency, and observation independence cannot be audited without a user identifier.
+2. Payment and Subscription definitions and pre-experiment statuses are unavailable, so new transactions and newly acquired Premium subscribers cannot be confirmed.
+3. The financial model relies on assumed price, contribution margin, campaign cost, and Conversion Realization Rate rather than verified financial and conversion data.
+4. The available post-implementation dataset is not yet sufficient to validate the persistence or causal impact of the A/B testing outcomes.
+These limitations do not erase the observed differences or the statistical results. They do, however, restrict how confidently those results can be translated into causal claims, incremental subscribers, actual revenue, and company-level profit.
+
+### 5.8 Risk Mitigation Priorities Before Broader Rollout
+
+| Priority | Required Action | Expected Benefit |
+|---|---|---|
+| 1 | Capture anonymized User_ID, assignment, and treatment exposure logs. | Verify unique users, randomization, and assignment consistency. |
+| 2 | Define Payment and Subscription events and capture pre-experiment status. | Distinguish existing statuses from new transactions and subscription changes. |
+| 3 | Validate Engagement Score definition and Duration Played measurement. | Ensure outcome metrics are correctly interpreted and consistently measured. |
+| 4 | Replace financial assumptions with approved price, cost, and contribution data. | Improve the reliability of ROI, ROAS, CAC, and payback estimates. |
+| 5 | Establish a post-implementation monitoring plan with comparable outcome metrics. | Assess whether the observed improvements persist after implementation. |
+
+### 5.9 Implications for the Business Decision
+
+Based on the current evidence, the recommended direction is Continue Testing / Limited Rollout, rather than immediate full rollout.
+
+This recommendation reflects the following:
+
+- Statistical results are positive across all four measured outcomes and remain significant after Holm correction.
+- Business indicators move in a favorable direction in the Target group.
+- The Base Case financial scenario is positive under the stated assumptions.
+- Important experiment-design, measurement, and financial uncertainties remain unresolved.
+A broader rollout should be considered only after the key measurement and financial assumptions have been validated and an appropriate post-implementation monitoring process is in place.
+
+Scope note: This assessment is based on the A/B testing dataset and assumptions documented in the preceding project stages. The separate post-implementation dataset has not yet been analyzed and is not treated as evidence for the current recommendation.
+
+## 6. Final Evaluation & Business Recommendation
+
+### 6.1 Evaluation Objective
+
+This section integrates the findings from the experimental methodology, statistical analysis, business impact assessment, financial feasibility model, and risk assessment to determine the appropriate business decision for the Spotify A/B testing project.
+
+The objective is to assess whether the observed outcomes in the Target group provide sufficient evidence to support broader implementation, or whether further testing and validation are required.
+
+This evaluation is based on the pre-implementation A/B testing analysis and the financial scenarios documented in the previous sections. The separate post-implementation dataset has not yet been analyzed and is therefore not used as evidence in this decision.
+
+### 6.2 Consolidated Evaluation of Findings
+
+The following table summarizes the evidence gathered across the previous stages.
+
+| Evaluation Dimension | Key Evidence | Assessment | Decision Implication |
+|---|---|---|---|
+| Experiment Design & Methodology | 100,000 observations, with 50,000 in each group; 50:50 allocation and randomization are based on the provided experiment information | The experiment framework is documented, but user-level assignment and uniqueness cannot be independently verified because User_ID is unavailable | Treat the group comparison as informative, while recognizing the design-verification limitation |
+| Statistical Results | All four outcomes were higher in the Target group and remained statistically significant after Holm correction (adjusted p < 0.001) | Strong statistical evidence of differences between the observed groups | Supports further consideration of the Target treatment |
+| Business Impact | Engagement Score, Duration Played, Payment = Yes, and Premium status all showed higher values in the Target group | Findings point in a positive direction across engagement, activity, and status indicators | Potential business value is promising, but some outcome definitions and baselines remain unknown |
+| Financial Feasibility | Base Case: ROI 114.98%, ROAS 3.07x, and net contribution Rp172.46 million under the stated assumptions | The modeled Base Case is financially positive; Conservative Case is negative and Optimistic Case is more favorable | Financial attractiveness is conditional on assumptions and realization of incremental outcomes |
+| Risk & Data Limitation | No User_ID, no pre-experiment Payment or Subscription status, unclear Payment definition, and assumed financial inputs | Material evidence gaps remain | Full rollout should wait for additional validation and monitoring |
+
+### 6.3 Statistical and Business Evidence
+
+#### Statistical Findings
+The Target group showed higher observed outcomes than the Control group across all four evaluated metrics:
+| Metric | Control | Target | Difference (Target - Control) | Statistical Conclusion |
+|---|---:|---:|---:|---|
+| Engagement Score | 0.599958 | 0.799726 | +0.199768 points | Significant after Holm correction |
+| Duration Played | 120.0758 minutes | 159.9129 minutes | +39.8371 minutes | Significant after Holm correction |
+| Payment = Yes | 69.688% | 79.814% | +10.126 percentage points | Significant after Holm correction |
+| Subscription = Premium | 59.742% | 80.250% | +20.508 percentage points | Significant after Holm correction |
+
+All four tests had Holm-adjusted p-values below 0.001. The 95% pointwise confidence intervals for the estimated differences were above zero.
+
+These results provide strong statistical evidence that the observed outcomes differ between the Control and Target groups. However, statistical significance alone does not establish the cause of the differences or prove incremental revenue, new transactions, or newly acquired Premium subscribers.
+
+#### Business Interpretation
+
+The findings suggest potentially better engagement and listening activity in the Target group. The higher Payment = Yes and Premium proportions are also positive status indicators.
+
+The business interpretation must remain bounded by the available data:
+- Higher Engagement Score does not independently establish improved retention.
+- Higher Duration Played does not establish long-term loyalty or subscription renewal.
+- Payment = Yes cannot be treated as a completed transaction or payment conversion without a clear event definition and transaction records.
+- Premium status cannot be treated as new subscriber acquisition without pre-experiment subscription status or user-level transition data.
+
+### 6.4 Financial Evaluation
+
+The financial model uses an estimated difference of 10,254 Premium-status outcomes as its starting point. This number is calculated from the difference between the observed Premium proportions in the two groups and is not verified new subscriber acquisition.
+
+The model applies the assumed monthly Premium price of Rp59,900, contribution margin, campaign cost, and Conversion Realization Rate.
+
+#### Financial Scenario Analysis
+
+| Financial Indicator | Conservative | Base Case | Optimistic |
+|---|---:|---:|---:|
+| Contribution Margin | 60% | 70% | 80% |
+| Campaign Cost | Rp250,000,000 | Rp150,000,000 | Rp100,000,000 |
+| Conversion Realization Rate | 50% | 75% | 100% |
+| Estimated Incremental Outcomes | 5,127 | 7,690.5 | 10,254 |
+| Modeled Revenue | Rp307,107,300 | Rp460,660,950 | Rp614,214,600 |
+| Net Contribution | -Rp65,735,620 | Rp172,462,665 | Rp391,371,680 |
+| ROI | -26.29% | 114.98% | 391.37% |
+| ROAS | 1.23x | 3.07x | 6.14x |
+| Incremental CAC | Rp48,761.46 | Rp19,504.58 | Rp9,752.29 |
+| CAC Payback | 1.36 months | 0.47 months | 0.20 months |
+
+The Base Case indicates positive modeled financial potential, while the Conservative Case produces a negative ROI. These outcomes are scenario estimates and depend on assumptions that have not been verified using actual campaign expenditure, transaction revenue, contribution margin, or confirmed incremental subscribers.
+
+### Conversion Realization Sensitivity
+
+Under fixed Base Case assumptions (70% contribution margin and Rp150 million campaign cost), the modeled financial outcomes change as follows:
+
+| Conversion Realization Rate | Estimated Incremental Outcomes | Modeled Revenue | Net Contribution | ROI | ROAS |
+|---:|---:|---:|---:|---:|---:|
+| 50% | 5,127 | Rp307,107,300 | Rp64,975,110 | 43.32% | 2.05x |
+| 75% | 7,690.5 | Rp460,660,950 | Rp172,462,665 | 114.98% | 3.07x |
+| 100% | 10,254 | Rp614,214,600 | Rp279,950,220 | 186.63% | 4.09x |
+
+The Base Case break-even Conversion Realization Rate is approximately 34.89%. Under the model assumptions, the realized share of estimated incremental outcomes must exceed this level for modeled contribution to cover campaign cost.
+
+The sensitivity analysis demonstrates that financial results depend materially on the realization rate. It does not validate the realization rate as an observed conversion probability.
+
+### 6.5 Key Risks Affecting the Decision
+
+The following limitations are material to the decision:
+| Risk / Limitation | Why It Matters | Required Validation or Mitigation |
+|---|---|---|
+| No unique User_ID | Unique users, repeated observations, and assignment consistency cannot be checked | Use anonymized persistent user identifiers and retain assignment logs in future experiments |
+| Randomization cannot be independently audited from the available file | The stated 50:50 randomization cannot be verified at user level | Preserve randomization metadata, allocation records, and experiment assignment logs |
+| Treatment details are not fully documented | The specific change applied to the Target group cannot be evaluated or reproduced from the dataset alone | Document the treatment, user eligibility, exposure rules, and experiment configuration |
+| No pre-experiment Payment or Subscription status | New payment events and newly acquired Premium subscribers cannot be identified | Capture baseline status and user-level transitions before and after treatment |
+| Payment definition is unclear | Payment = Yes may not represent an actual transaction during the experiment | Define the event and validate it against transaction records |
+| Financial inputs are assumptions | ROI, ROAS, CAC, and payback may differ from actual results | Replace assumptions with approved price, actual campaign costs, realized margin, and verified incremental outcomes |
+| Post-implementation evidence is not yet analyzed | Persistence of outcomes and operational impact after implementation are unknown | Analyze the separate post-implementation dataset and collect richer outcome measures |
+
+### 6.6 Business Recommendation
+
+Recommended Decision: Continue Testing / Limited Rollout
+Based on the evidence available from Stages 1–5, the recommended decision is Continue Testing / Limited Rollout, rather than immediate full rollout.
+
+This recommendation reflects the following:
+
+1. Statistical evidence is positive: all four evaluated metrics are higher in the Target group and remain statistically significant after Holm correction.
+2. Business indicators are directionally positive: the Target group shows higher engagement, listening duration, Payment = Yes proportion, and Premium proportion.
+3. Financial potential is promising but conditional: the Base Case produces a positive modeled ROI, while the Conservative Case is negative. The financial outputs rely on unverified assumptions and a Premium-status difference that is not confirmed new subscriber acquisition.
+4. Important evidence gaps remain: user-level assignment, baseline status, transaction definitions, actual campaign costs, and post-implementation outcomes require validation.
+The results support further controlled evaluation of the Target treatment. They do not yet provide sufficient verified evidence to conclude that a full-scale rollout will generate the modeled financial returns.
+
+### 6.7 Decision Options Considered
+
+| Decision Option | Meaning | Assessment for This Project |
+|---|---|---|
+| Full Rollout | Deploy the Target treatment broadly | Not recommended yet because key data and financial assumptions remain unverified |
+| Continue Testing / Limited Rollout | Continue with a controlled pilot while improving measurement and validating outcomes | **Recommended** based on positive experimental evidence and remaining uncertainty |
+| Iterate | Modify the treatment and run another experiment | Consider if subsequent monitoring identifies performance issues or if the treatment needs refinement |
+| Stop | Discontinue the treatment | Not supported by the current positive statistical findings alone; reconsider if further testing reveals unacceptable risks or negative business results |
+
+### 6.8 Conditions Before Full Rollout
+
+Before approving a broader rollout, the following conditions should be addressed:
+- Verify unique users and retain persistent Control/Target assignment identifiers.
+- Document the exact treatment applied to the Target group.
+- Define Payment events and validate Payment outcomes against transaction records.
+- Capture pre-experiment and post-experiment subscription status to identify genuine new Premium subscribers or subscription transitions.
+- Replace financial assumptions with actual campaign costs, realized revenue, and validated contribution margin.
+- Define decision guardrails for user experience, operational performance, and financial outcomes.
+- Evaluate post-implementation performance over an appropriate observation period using metrics that are comparable with the experiment outcomes.
+
+### 6.9 Next Steps: Post-Implementation Evaluation
+
+The separate post-implementation dataset contains Date and Total Users and covers approximately 15 days. It has not been analyzed as part of this pre-implementation decision.
+
+The next phase should begin with data validation and clarification of the Total Users definition. Depending on whether it represents daily active users, new users, or cumulative users, the analysis can include:
+- Daily user trend.
+- Day-over-day change and growth rate, where the metric definition supports it.
+- Changes in user volume during the observation period.
+- Monitoring observations and potential anomalies.
+Because the post-implementation dataset does not contain user-level identifiers, Control/Target labels, or the four A/B outcomes, it cannot independently verify whether the Target treatment caused changes in Engagement, Duration Played, Payment, Subscription, or revenue.
+
+A stronger post-implementation evaluation should collect comparable user-level metrics, treatment exposure, transaction events, subscription transitions, and operational cost data.
+
+### 6.10 Final Evaluation Conclusion
+
+The A/B testing analysis shows consistently higher observed outcomes for the Target group across all four evaluated metrics. Statistical results remain significant after Holm correction, business indicators are directionally positive, and the Base Case financial scenario suggests potential positive returns under the stated assumptions.
+
+Nevertheless, the absence of user-level identifiers, pre-experiment status data, clear payment-event definitions, verified financial inputs, and analyzed post-implementation outcomes limits the strength of the business and financial conclusions.
+
+Therefore, the appropriate decision at this stage is Continue Testing / Limited Rollout. The Target treatment should proceed only through controlled evaluation and improved measurement. A full rollout should be considered after incremental business outcomes and actual financial performance have been validated.
