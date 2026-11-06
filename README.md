@@ -303,7 +303,9 @@ The analysis distinguishes between an observed difference in the dataset and a b
 
 Relative uplift is calculated as:
 
-$$\text{Relative Uplift} = \frac{\text{Target} - \text{Control}}{\text{Control}} \times 100\%$$
+$$
+\text{Relative Uplift} = \frac{\text{Target} - \text{Control}}{\text{Control}} \times 100\%
+$$
 
 For Payment and Subscription, the absolute difference in percentage points is the primary comparison. Relative uplift is included as supplementary context and should not replace percentage-point reporting.
 
@@ -380,3 +382,270 @@ The Target group demonstrated positive observed differences across all four eval
 These findings indicate potentially favorable differences in user engagement, listening activity, and subscription-related status in the Target group. However, higher engagement and listening duration do not independently establish improved retention. Similarly, Payment and Subscription status differences cannot yet be interpreted as incremental transactions or newly acquired Premium subscribers.
 
 Further validation using user-level baseline information, clearly defined payment events, subscription history, and actual financial records is required before quantifying incremental business value. These findings will be used as context for the separate Financial Feasibility Analysis; they should not be treated as realized revenue or profit.
+
+## 4. Financial Feasibility Analysis
+
+### 4.1 Objective
+
+This section evaluates the potential financial feasibility of the Target strategy using the observed difference in Premium subscription status between the Target and Control groups.
+
+The analysis consists of two complementary components:
+1. Financial Scenario Analysis — evaluates potential financial outcomes under Conservative, Base Case, and Optimistic assumptions.
+2. Conversion Realization Sensitivity Analysis — evaluates how financial outcomes change when the share of estimated incremental Premium outcomes varies, while the other Base Case assumptions remain fixed.
+
+The financial model is a hypothetical business simulation. It is not a report of Spotify's actual campaign expenditure, contribution margin, revenue, customer acquisition cost, or profit.
+
+### 4.2 Financial Model Basis and Assumptions
+The observed Premium status proportions from the A/B test are:
+
+| Metric | Control | Target | Difference |
+|---|---:|---:|---:|
+| Premium proportion | 59.742% | 80.250% | +20.508 percentage points |
+
+The estimated difference in Premium outcomes for a Target population of 50,000 is calculated as:
+
+$$
+\text{Estimated Premium Outcome Difference}
+= 50{,}000 \times (0.80250 - 0.59742)
+= 10{,}254
+$$
+
+The value of **10,254 is an estimated difference in the number of users with Premium status between the two groups**, scaled to 50,000 Target users. It is not a verified count of newly acquired subscribers because pre-experiment Subscription status and user-level transition data are unavailable.
+
+The model uses the following assumptions:
+
+| Assumption | Value | Description |
+|---|---:|---|
+| Target population | 50,000 users | Number of observations in the Target group |
+| Observed Premium proportion difference | 20.508 pp | Target Premium proportion minus Control Premium proportion |
+| Estimated outcome difference at 100% realization | 10,254 | 50,000 multiplied by the observed proportion difference |
+| Monthly Premium price | Rp59,900 | Assumed monthly price used in the simulation |
+| Contribution margin | 60% / 70% / 80% | Scenario assumptions, not verified Spotify margins |
+| Campaign cost | Rp250 million / Rp150 million / Rp100 million | Scenario assumptions, not actual campaign expenditure |
+| Conversion realization rate | 50% / 75% / 100% | Scenario assumptions representing the share of the estimated outcome difference assumed to be realized |
+| Revenue period | One monthly billing cycle | Assumes each estimated realized outcome generates one full month of revenue at the assumed price |
+
+**Important interpretation:** Conversion Realization Rate is a modeling parameter used to account for uncertainty in translating the observed Premium status difference into a financial estimate. It is not a measured conversion probability or a value observed in the experiment dataset.
+
+### 4.3 Financial Formulas
+The model applies the following formulas:
+
+#### 1. Estimated incremental Premium outcomes
+
+$$
+\text{Estimated Outcomes}
+= 10{,}254 \times \text{Conversion Realization Rate}
+$$
+
+#### 2. Incremental gross revenue
+
+$$
+\text{Incremental Revenue}
+= \text{Estimated Outcomes} \times \text{Monthly Premium Price}
+$$
+
+#### 3. Contribution
+
+$$
+\text{Contribution}
+= \text{Incremental Revenue} \times \text{Contribution Margin}
+$$
+
+#### 4. Net contribution
+
+$$
+\text{Net Contribution}
+= \text{Contribution} - \text{Campaign Cost}
+$$
+
+#### 5. Return on Investment (ROI)
+
+$$
+\text{ROI}
+= \frac{\text{Net Contribution}}{\text{Campaign Cost}} \times 100\%
+$$
+
+#### 6. Return on Ad Spend (ROAS)
+
+$$
+\text{ROAS}
+= \frac{\text{Incremental Revenue}}{\text{Campaign Cost}}
+$$
+
+#### 7. Incremental Customer Acquisition Cost (CAC)
+
+$$
+\text{Incremental CAC}
+= \frac{\text{Campaign Cost}}{\text{Estimated Outcomes}}
+$$
+
+#### 8. Monthly contribution per estimated outcome
+
+$$
+\text{Monthly Contribution per User}
+= \text{Monthly Premium Price} \times \text{Contribution Margin}
+$$
+
+#### 9. CAC payback period
+
+$$
+\text{CAC Payback (months)}
+= \frac{\text{Incremental CAC}}{\text{Monthly Contribution per User}}
+$$
+
+#### 10. Break-even conversion realization rate
+
+$$
+\text{Break-even Rate}
+= \frac{\text{Campaign Cost}}
+{10{,}254 \times \text{Monthly Premium Price} \times \text{Contribution Margin}}
+\times 100\%
+$$
+
+ROI is calculated using contribution after the assumed contribution margin, less campaign cost. ROAS uses gross modeled revenue divided by campaign cost. Therefore, ROAS and ROI measure different things and should not be interpreted interchangeably.
+
+### 4.4 Financial Scenario Analysis
+Financial Scenario Analysis compares three combinations of assumptions to assess how financial feasibility changes under different operating conditions.
+
+#### 4.4.1 Scenario Assumptions
+
+| Scenario | Contribution Margin | Campaign Cost | Conversion Realization Rate |
+|---|---:|---:|---:|
+| Conservative | 60% | Rp250,000,000 | 50% |
+| Base Case | 70% | Rp150,000,000 | 75% |
+| Optimistic | 80% | Rp100,000,000 | 100% |
+
+#### 4.4.2 Financial Projection Results
+
+| Financial Indicator | Conservative | Base Case | Optimistic |
+|---|---:|---:|---:|
+| Estimated incremental outcomes | 5,127 | 7,690.5 | 10,254 |
+| Incremental gross revenue (one month) | Rp307,107,300 | Rp460,660,950 | Rp614,214,600 |
+| Contribution | Rp184,264,380 | Rp322,462,665 | Rp491,371,680 |
+| Campaign cost | Rp250,000,000 | Rp150,000,000 | Rp100,000,000 |
+| **Net contribution** | **-Rp65,735,620** | **Rp172,462,665** | **Rp391,371,680** |
+| **ROI** | **-26.29%** | **114.98%** | **391.37%** |
+| ROAS | 1.23x | 3.07x | 6.14x |
+| Incremental CAC | Rp48,761.46 | Rp19,504.58 | Rp9,752.29 |
+| Monthly contribution per user | Rp35,940 | Rp41,930 | Rp47,920 |
+| CAC payback period | 1.36 months | 0.47 months | 0.20 months |
+| Break-even realization rate | 67.84% | 34.89% | 20.35% |
+
+Estimated outcomes can be fractional when expressed as expected values. For example, 7,690.5 in the Base Case is a model expectation, not an actual count of half a person or a verified subscriber count.
+
+#### 4.4.3 Scenario Interpretation
+
+**Conservative Scenario**
+
+The Conservative Scenario assumes a 60% contribution margin, Rp250 million in campaign cost, and a 50% conversion realization rate. The model estimates 5,127 incremental outcomes and Rp307.11 million in one-month gross revenue. After applying the assumed contribution margin and deducting campaign cost, net contribution is -Rp65.74 million, resulting in an ROI of -26.29%.
+
+Under these assumptions, the modeled contribution is insufficient to cover campaign cost. The assumed realization rate of 50% is also below the break-even realization rate of 67.84%. Therefore, this scenario is not financially feasible within the model assumptions.
+
+**Base Case Scenario**
+
+The Base Case assumes a 70% contribution margin, Rp150 million in campaign cost, and a 75% conversion realization rate. The model estimates 7,690.5 incremental outcomes and Rp460.66 million in one-month gross revenue. Net contribution is Rp172.46 million, resulting in an ROI of 114.98% and ROAS of 3.07x.
+
+The assumed realization rate of 75% is above the break-even realization rate of 34.89%. This scenario indicates potential financial feasibility under the stated assumptions. It should be treated as a planning case rather than evidence of actual financial performance.
+
+**Optimistic Scenario**
+
+The Optimistic Scenario assumes an 80% contribution margin, Rp100 million in campaign cost, and a 100% conversion realization rate. The model estimates 10,254 incremental outcomes and Rp614.21 million in one-month gross revenue. Net contribution is Rp391.37 million, resulting in an ROI of 391.37% and ROAS of 6.14x.
+
+This scenario produces the most favorable modeled outcome. However, it also relies on the highest realization rate and contribution margin, together with the lowest campaign cost. It should therefore be interpreted as an upside scenario, not the expected result.
+
+#### 4.4.4 Scenario Analysis Conclusion
+
+The scenario analysis indicates that the financial outcome is sensitive to the assumed contribution margin, campaign cost, and conversion realization rate. The Conservative Scenario produces a negative net contribution, while the Base Case and Optimistic Scenarios produce positive modeled net contributions.
+
+The Base Case provides a useful reference for planning, but the model cannot establish actual campaign profitability until incremental new subscribers, actual revenue, contribution margin, and campaign expenditure are validated using operational and financial data.
+
+### 4.5 Conversion Realization Sensitivity Analysis
+
+4.5.1 Objective
+
+The sensitivity analysis evaluates how changes in the Conversion Realization Rate affect the estimated financial outcome.
+
+Unlike the Financial Scenario Analysis, this analysis changes only the Conversion Realization Rate while holding the other assumptions constant at the Base Case values. This isolates the effect of realization rate on the financial projections.
+
+#### 4.5.2 Fixed Base Case Assumptions
+| Assumption | Fixed Value |
+|---|---:|
+| Target population | 50,000 users |
+| Estimated outcome difference at 100% realization | 10,254 |
+| Monthly Premium price | Rp59,900 |
+| Contribution margin | 70% |
+| Campaign cost | Rp150,000,000 |
+
+#### 4.5.3 Sensitivity Results
+
+| Financial Indicator | 50% Realization | 75% Realization | 100% Realization |
+|---|---:|---:|---:|
+| Estimated incremental outcomes | 5,127 | 7,690.5 | 10,254 |
+| Incremental gross revenue (one month) | Rp307,107,300 | Rp460,660,950 | Rp614,214,600 |
+| Contribution | Rp214,975,110 | Rp322,462,665 | Rp429,950,220 |
+| Campaign cost | Rp150,000,000 | Rp150,000,000 | Rp150,000,000 |
+| **Net contribution** | **Rp64,975,110** | **Rp172,462,665** | **Rp279,950,220** |
+| **ROI** | **43.32%** | **114.98%** | **186.63%** |
+| ROAS | 2.05x | 3.07x | 4.09x |
+| Incremental CAC | Rp29,256.88 | Rp19,504.58 | Rp14,628.44 |
+
+#### 4.5.4 Sensitivity Interpretation
+
+**50% Realization Rate**
+
+At a 50% realization rate, the model estimates 5,127 incremental outcomes and Rp307.11 million in one-month gross revenue. Under the fixed Base Case contribution margin and campaign cost, net contribution is Rp64.98 million and ROI is 43.32%.
+
+**75% Realization Rate**
+
+At a 75% realization rate, the model estimates 7,690.5 incremental outcomes and Rp460.66 million in one-month gross revenue. Net contribution increases to Rp172.46 million and ROI reaches 114.98%.
+
+**100% Realization Rate**
+
+At a 100% realization rate, the model estimates 10,254 incremental outcomes and Rp614.21 million in one-month gross revenue. Net contribution increases to Rp279.95 million and ROI reaches 186.63%.
+
+#### 4.5.5 Sensitivity Analysis Conclusion
+
+With contribution margin, monthly price, and campaign cost held constant at Base Case values, higher Conversion Realization Rates result in higher modeled revenue, contribution, net contribution, and ROI. Incremental CAC decreases as the estimated number of realized outcomes increases.
+
+The Base Case break-even realization rate is approximately 34.89%. Under the fixed Base Case assumptions, realization rates of 50%, 75%, and 100% are all above this break-even threshold.
+
+This sensitivity analysis shows the financial model's dependence on realization assumptions. It does not prove that any of the tested realization rates will occur in practice.
+
+### 4.6 Overall Financial Feasibility Assessment
+The two analyses answer different questions:
+
+| Analysis | Question Answered | Key Finding |
+|---|---|---|
+| Financial Scenario Analysis | What are the modeled financial outcomes under different combinations of assumptions? | ROI ranges from -26.29% in the Conservative Scenario to 391.37% in the Optimistic Scenario; Base Case ROI is 114.98%. |
+| Conversion Realization Sensitivity Analysis | How does the financial outcome change when only realization rate changes? | Under fixed Base Case assumptions, ROI increases from 43.32% at 50% realization to 186.63% at 100% realization. |
+
+**Overall assessment:** The model indicates potential financial feasibility under the Base Case assumptions. However, the financial result remains hypothetical because the experiment dataset does not establish the number of newly acquired Premium subscribers, and the model uses assumed price, contribution margin, campaign cost, and realization rate.
+
+A full business decision should therefore remain conditional on validation of actual incremental subscribers, transaction-level revenue, campaign expenditure, contribution margin, and subscription retention.
+
+### 4.7 Financial Model Limitations
+
+The following limitations should accompany the financial projections:
+
+1. **Premium status difference is not verified subscriber acquisition.** The estimated 10,254 outcomes are derived from the difference in post-experiment Premium proportions, not from observed user-level subscription transitions.
+2. **No pre-experiment subscription baseline is available.** The dataset cannot identify which users moved from Free to Premium during the experiment.
+3. **Conversion Realization Rate is an assumption.** The 50%, 75%, and 100% values are scenario inputs, not measured probabilities or experiment results.
+4. **Monthly Premium price is assumed.** The model applies Rp59,900 per estimated outcome for one monthly billing cycle and does not establish the actual price paid by each user.
+5. **Contribution margin is assumed.** The 60%, 70%, and 80% margins are scenario parameters, not verified company financial data.
+6. **Campaign cost is assumed.** The modeled campaign costs are not actual Spotify campaign expenditures.
+7. **Revenue is modeled for one month only.** The projections do not incorporate renewals, churn, discounts, refunds, taxes, payment fees, or longer-term customer value.
+8. **Net contribution is not total company net profit.** Other operating expenses and financial items are not included in this model.
+9. **CAC and payback depend on the incremental outcome estimate.** These metrics should not be treated as actual customer acquisition metrics until genuinely incremental new paying subscribers are validated.
+
+### 4.8 Business Implications and Next Steps
+The financial model suggests that the Target strategy may be financially attractive under the Base Case assumptions, but the evidence is not sufficient to support an unconditional full rollout.
+
+Before making a final implementation decision, the following data should be validated:
+- User-level subscription status before and after the experiment.
+- Verified new Premium subscription events and transaction records.
+- Actual monthly revenue collected and applicable pricing or discounts.
+- Actual campaign and implementation expenditure.
+- Verified contribution margin and relevant variable costs.
+- Subscription retention and renewal behavior beyond the initial billing cycle.
+
+The financial findings should be considered alongside the Statistical Results, Business Impact Analysis, and Risk Assessment. Post-implementation monitoring will be evaluated separately in the next stage and should not be treated as completed evidence in this analysis.
