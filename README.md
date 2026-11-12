@@ -172,26 +172,56 @@ However, daily DAU continued to fluctuate, including a substantial increase on M
 The results provide a positive descriptive signal for continued monitoring, but they do not establish a causal impact of the Target strategy. Further evaluation requires longer observation periods, user-level activity data, and an appropriate comparison group or baseline to account for external factors and isolate the implementation effect.
 
 ## Conclusion
-The simulated A/B testing analysis shows that the Enhanced Personalized Audio Discovery group (Target) recorded higher observed outcomes across all four evaluated metrics compared with the Control group.
 
-All four differences remained statistically significant after Holm multiple-testing correction. The largest standardized differences were observed in Engagement Score and Duration Played.
+The simulated A/B testing analysis shows that the Enhanced Personalized Audio Discovery group (Target) recorded higher observed outcomes across all four evaluated metrics compared with the Control group. The Target group demonstrated a higher average Engagement Score, longer average listening duration, and higher Payment Yes and Premium subscription status proportions.
 
-The financial feasibility model indicates potential positive financial contribution under the Base Case and Optimistic assumptions. However, the Conservative scenario generates negative net contribution, highlighting the model's sensitivity to realization rate, contribution margin, and campaign cost.
+All four differences remained statistically significant after Holm multiple-testing correction. The largest standardized effects were observed in Engagement Score (Cohen's d = 1.997) and Duration Played (Cohen's d = 1.327).
 
-During the subsequent population-level monitoring period, average DAU was 52.43% higher during the expanded rollout phase than during the initial pilot phase. This comparison is descriptive and does not establish a causal effect of the Target strategy.
+The financial feasibility model indicates potential positive Net Contribution under the Base Case and Optimistic assumptions, generating modeled ROI values of 114.98% and 391.37%, respectively. However, the Conservative scenario generates negative Net Contribution and an ROI of -26.29%, highlighting the model's sensitivity to Conversion Realization Rate, Contribution Margin, and Campaign Cost.
 
-Overall, the Target strategy demonstrates promising experimental outcomes and modeled financial potential. However, further validation using verified incremental subscriptions, transaction records, actual costs, and more complete post-implementation data is required before making a full business investment decision.
+During the subsequent population-level monitoring period, average DAU was 52.43% higher during the expanded rollout phase than during the initial pilot phase. This represents a descriptive difference between two observation periods and does not establish a causal effect of the Target strategy.
+
+Overall, the Target strategy demonstrates promising experimental outcomes and modeled financial potential. However, these findings are not yet sufficient to establish long-term business impact or confirm actual financial returns. Further validation using verified incremental subscriptions, transaction records, actual implementation costs, and more complete post-implementation data is required before making a full business investment decision.
+
+## Overall Project Decision
+Continue Evaluation
+The Target strategy shows promising statistical outcomes and modeled financial potential. However, further validation is required to confirm incremental subscription value, actual financial returns, and sustained user activity before a full business investment decision.
+
+Decision Basis
+- Statistical evidence: 4/4 metrics significant after Holm correction.
+- Financial model: Positive Base Case ROI of 114,98%.
+- Implementation monitoring: Average DAU 52,43% higher during Full Rollout than Pilot, descriptively.
+- Remaining risks: Incrementality, actual revenue, cost validation, and long-term retention.
 
 ## Recommendations
-**Continue Testing/Controlled Rollout**
+**Recommended Decision: Continue Evaluation & Maintain Controlled Monitoring**
+
+The Target strategy demonstrates favorable experimental outcomes and potential financial feasibility under the Base Case assumptions. However, the current evidence is not sufficient to confirm actual incremental subscriptions, realized financial returns, or sustained improvements in user activity.
+
+Further evaluation and controlled monitoring are therefore recommended before making a full business investment decision.
 
 The Target Strategy can proceed to a controlled evaluation and implementation phase, but there is not yet sufficient evidence to conclude that a full roll-out will generate the projected financial returns.
+
 ### Recommended Next Actions
-- Continue testing using User_ID and treatment exposure logs.
-- Validate new Premium customers using baseline and transaction records.
-- Replace financial assumptions with actual cost and revenue data.
-- Continue monitoring DAU and retention.
-- Evaluate music, podcasts and playlists separately to identify the most valuable discovery components.
+1. Strengthen Future Experiment Design
+
+Conduct further A/B testing using persistent anonymized User_IDs, treatment assignment records, and exposure timestamps. Define primary success metrics, secondary metrics, and guardrail metrics before the experiment begins.
+
+2. Validate Incremental Premium Subscriptions
+
+Collect pre- and post-experiment subscription status and transaction-level records to identify verified Free-to-Premium upgrades, new subscriptions, and actual payment activity.
+
+3. Validate Financial Assumptions
+
+Replace hypothetical financial inputs with actual Premium pricing, campaign expenditure, contribution margin, transaction revenue, and other relevant implementation costs. Recalculate ROI, ROAS, Incremental CAC, and payback using verified incremental outcomes.
+
+4. Extend Post-Implementation Monitoring
+
+Continue tracking DAU, listening duration, and retention over a longer observation period. Where feasible, maintain a concurrent comparison group or an appropriate historical baseline to help separate implementation effects from seasonal and external factors.
+
+5. Evaluate Audio Discovery Components Separately
+
+Conduct further experiments to evaluate personalized music recommendations, podcast discovery, and curated playlists separately. This can help identify which discovery components provide the greatest engagement value across different user preferences and Ramadan listening contexts.
 
 ## Tools & Technologies
 Python, Power BI
