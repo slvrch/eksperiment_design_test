@@ -116,9 +116,10 @@ Periods in the project scenario:
 
 ## Analysis & Key Insights
 
+### 1 - Engagement Outcomes
 <img width="853" height="292" alt="image" src="https://github.com/user-attachments/assets/470a6e97-f942-4bbb-a9fe-9038a81422b3" />
 
-**Inisight 1 - Engagement Outcomes**
+**Inisight:**
 
 The Target group demonstrated higher observed engagement outcomes than the Control group. Engagement Score was 33.30% higher on a relative basis, while average listening duration was approximately 39.84 minutes higher.
 
@@ -126,9 +127,10 @@ These findings provide favorable statistical evidence for the enhanced personali
 
 However, the findings should not be interpreted as confirmed improvements in user satisfaction, retention, or long-term business value. The interpretation also depends on the experiment's assumed randomization and observation independence, which cannot be independently verified from the available dataset.
 
+### 2 - Subscription-related Outcomes
 <img width="849" height="354" alt="image" src="https://github.com/user-attachments/assets/a4c6d30b-812c-4e64-8e9e-d795b8c99c59" />
 
-**Insight 2 - Subscription-related Outcomes**
+**Insight:**
 
 The Target group demonstrated higher observed Payment = Yes and Premium subscription status proportions than the Control group. Both differences remained statistically significant after Holm multiple-testing correction.
 
@@ -136,9 +138,10 @@ These findings provide favorable statistical evidence of differences in subscrip
 
 However, the results do not establish an increase in newly acquired Premium subscribers, completed payment transactions, or incremental subscription revenue because pre-experiment status information and transaction-level records were unavailable.
 
+### 3 - Financial Scenario Analysis
 <img width="1050" height="449" alt="image" src="https://github.com/user-attachments/assets/88567953-657e-4fb5-af80-0a212cb43fd7" />
 
-**Insight 3 - Financial Scenario Analysis**
+**Insight:**
 
 The Target strategy demonstrates potential financial feasibility under the Base Case and Optimistic assumptions, generating modeled ROI values of 114.98% and 391.37%, respectively.
 
@@ -146,9 +149,10 @@ However, the Conservative Scenario results in a negative ROI of -26.29% and a ne
 
 These findings indicate that the financial outcome is highly dependent on the assumed realization rate, contribution margin, and campaign cost. The Base Case provides a useful financial planning reference, but the results remain hypothetical.
 
+### 4 - Conversion Realization Sensitivity Analysis
 <img width="956" height="388" alt="image" src="https://github.com/user-attachments/assets/b2bffdab-077b-42a2-8f4a-4d080994c60f" />
 
-**Insight 4 - Conversion Realization Sensitivity Analysis**
+**Insight:**
 
 Modeled financial outcomes are sensitive to changes in the Conversion Realization Rate. Under fixed Base Case assumptions, ROI increases from 43.32% at 50% realization to 186.63% at 100% realization, while Net Contribution increases from Rp64.98 million to Rp279.95 million.
 
@@ -156,9 +160,10 @@ The model remains financially contribution-positive at all three tested realizat
 
 However, Conversion Realization Rate is a hypothetical modeling parameter rather than an observed conversion probability. The sensitivity results therefore demonstrate how the financial model responds to different assumptions; they do not establish which realization rate will occur in practice.
 
+### 5 - Post Implementation
 <img width="1007" height="393" alt="image" src="https://github.com/user-attachments/assets/458b578f-05ae-400e-b038-4f86a43d68be" />
 
-**Insight 5 - Post Implementation**
+**Insight:**
 
 Population-level user activity was higher during the expanded rollout period compared with the initial pilot period. Average DAU increased from 16,184.14 to 24,669.71 users, representing an observed difference of 52.43%.
 
