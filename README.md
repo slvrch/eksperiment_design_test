@@ -118,7 +118,7 @@ Periods in the project scenario:
 
 <img width="853" height="292" alt="image" src="https://github.com/user-attachments/assets/470a6e97-f942-4bbb-a9fe-9038a81422b3" />
 
-**Inisight:**
+**Inisight 1 - Engagement Outcomes**
 The Target group demonstrated higher observed engagement outcomes than the Control group. Engagement Score was 33.30% higher on a relative basis, while average listening duration was approximately 39.84 minutes higher.
 
 These findings provide favorable statistical evidence for the enhanced personalized audio discovery strategy across the measured engagement and listening activity outcomes.
@@ -127,7 +127,7 @@ However, the findings should not be interpreted as confirmed improvements in use
 
 <img width="849" height="354" alt="image" src="https://github.com/user-attachments/assets/a4c6d30b-812c-4e64-8e9e-d795b8c99c59" />
 
-**Insight 2:**
+**Insight 2 - Subscription-related Outcomes**
 
 The Target group demonstrated higher observed Payment = Yes and Premium subscription status proportions than the Control group. Both differences remained statistically significant after Holm multiple-testing correction.
 
@@ -137,7 +137,7 @@ However, the results do not establish an increase in newly acquired Premium subs
 
 <img width="1050" height="449" alt="image" src="https://github.com/user-attachments/assets/88567953-657e-4fb5-af80-0a212cb43fd7" />
 
-**Insight 3 - Financial**
+**Insight 3 - Financial Scenario Analysis**
 
 The Target strategy demonstrates potential financial feasibility under the Base Case and Optimistic assumptions, generating modeled ROI values of 114.98% and 391.37%, respectively.
 
@@ -147,16 +147,22 @@ These findings indicate that the financial outcome is highly dependent on the as
 
 <img width="956" height="388" alt="image" src="https://github.com/user-attachments/assets/b2bffdab-077b-42a2-8f4a-4d080994c60f" />
 
-**Insight 4 - Sensitivity**
+**Insight 4 - Conversion Realization Sensitivity Analysis**
 Modeled financial outcomes are sensitive to changes in the Conversion Realization Rate. Under fixed Base Case assumptions, ROI increases from 43.32% at 50% realization to 186.63% at 100% realization, while Net Contribution increases from Rp64.98 million to Rp279.95 million.
 
 The model remains financially contribution-positive at all three tested realization levels, as each is above the 34.89% break-even threshold.
 
 However, Conversion Realization Rate is a hypothetical modeling parameter rather than an observed conversion probability. The sensitivity results therefore demonstrate how the financial model responds to different assumptions; they do not establish which realization rate will occur in practice.
 
+<img width="999" height="397" alt="image" src="https://github.com/user-attachments/assets/afa35187-db93-4a06-88db-d4cbbcefc5bb" />
+
+
 **Insight 5 - Post Implementation**
+Population-level user activity was higher during the expanded rollout period compared with the initial pilot period. Average DAU increased from 16,184.14 to 24,669.71 users, representing an observed difference of 52.43%.
 
+However, daily DAU continued to fluctuate, including a substantial increase on March 8 following a low observation on March 7, and activity declined slightly by March 15.
 
+The results provide a positive descriptive signal for continued monitoring, but they do not establish a causal impact of the Target strategy. Further evaluation requires longer observation periods, user-level activity data, and an appropriate comparison group or baseline to account for external factors and isolate the implementation effect.
 
 ## Conclusion
 The simulated A/B testing analysis shows that the Enhanced Personalized Audio Discovery group (Target) recorded higher observed outcomes across all four evaluated metrics compared with the Control group.
