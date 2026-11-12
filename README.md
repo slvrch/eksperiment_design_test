@@ -145,24 +145,18 @@ However, the Conservative Scenario results in a negative ROI of -26.29% and a ne
 
 These findings indicate that the financial outcome is highly dependent on the assumed realization rate, contribution margin, and campaign cost. The Base Case provides a useful financial planning reference, but the results remain hypothetical.
 
+<img width="956" height="388" alt="image" src="https://github.com/user-attachments/assets/b2bffdab-077b-42a2-8f4a-4d080994c60f" />
+
 **Insight 4 - Sensitivity**
+Modeled financial outcomes are sensitive to changes in the Conversion Realization Rate. Under fixed Base Case assumptions, ROI increases from 43.32% at 50% realization to 186.63% at 100% realization, while Net Contribution increases from Rp64.98 million to Rp279.95 million.
 
-### C. Post-Implementation Evaluations
+The model remains financially contribution-positive at all three tested realization levels, as each is above the 34.89% break-even threshold.
 
-**Final Result**
-| Metric | Phase 1 — Pilot | Phase 2 — Full Rollout |
-|--------|--------|--------|
-| Period | 1–7 Maret | 8–14 Maret |
-| Average DAU | 16.184,14 | 24.669,71 |
+However, Conversion Realization Rate is a hypothetical modeling parameter rather than an observed conversion probability. The sensitivity results therefore demonstrate how the financial model responds to different assumptions; they do not establish which realization rate will occur in practice.
 
-**Insight 1 - Pilot Monitoring:**
-DAU between 1 and 7 March fluctuated, reaching a low of 11,660 on 7 March.
+**Insight 5 - Post Implementation**
 
-**Insight 2 - Expanded Rollout:**
-The average DAU from 8 to 14 March stood at 24,669.71, 52.43 per cent higher than during the pilot period.
 
-**Insight 3 - Peak Activity:**
-DAU peaked at 29,803 on 11 March, before falling to 24,446 on 15 March
 
 ## Conclusion
 The simulated A/B testing analysis shows that the Enhanced Personalized Audio Discovery group (Target) recorded higher observed outcomes across all four evaluated metrics compared with the Control group.
