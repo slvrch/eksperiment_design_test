@@ -3,7 +3,23 @@
 
 ## Project Overview & Executive Summary
 
-A simulated Spotify business case was developed to evaluate an enhanced personalized audio discovery experience. The proposed strategy was compared with a standard discovery experience using A/B testing across engagement, listening duration, payment status, and subscription status. The results were then evalated through financial scenario modeling and a subsequent population-level monitoring exercise during a simulated Ramadan rollout.
+This project presents a simulated Spotify business case to evaluate an Enhanced Personalized Audio Discovery strategy in the context of Ramadan. The proposed strategy was compared with the Standard Audio Discovery experience through A/B testing, using four outcome metrics: Engagement Score, Listening Duration, Payment Status, and Subscription Status.
+
+The analysis was extended beyond experimentation through financial scenario modeling, Conversion Realization Sensitivity Analysis, and population-level monitoring during a simulated Ramadan rollout. Four Power BI dashboards were developed to communicate the experimental results, financial projections, implementation monitoring, and overall business evaluation.
+
+### Key Findings
+
+- **A/B Testing Performance:** The Target group recorded higher observed outcomes across all four evaluated metrics. All differences remained statistically significant after Holm multiple-testing correction (adjusted p-value < 0.001).
+- **Financial Feasibility:** The Base Case model generated an ROI of 114.98% and a Net Contribution of Rp172.46 million. However, the Conservative scenario produced negative Net Contribution, highlighting the importance of validating financial assumptions.
+- **Post-Implementation Monitoring:** Average population-level DAU during the expanded rollout period was 52.43% higher than during the initial pilot period. This is a descriptive comparison and does not establish a causal effect of the Target strategy.
+
+### Overall Business Recommendation
+
+**Continue Evaluation & Maintain Controlled Monitoring.**
+
+The Target strategy demonstrates promising experimental outcomes and modeled financial potential. However, further validation of incremental Premium subscriptions, actual transactions, implementation costs, and sustained user activity is required before making a full business investment decision.
+
+*Note: This project is a simulated business case. Experiment assumptions, product treatment details, financial inputs, and rollout conditions are not independently verified as actual Spotify operations.*
 
 ## Business Background
 
